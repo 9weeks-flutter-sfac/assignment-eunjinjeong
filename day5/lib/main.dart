@@ -37,7 +37,7 @@ class _Page1State extends State<Page1> {
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: ((context) => const Page2())));
+                      MaterialPageRoute(builder: ((context) => Page2())));
                 },
                 child: const Text("1번 과제"),
               ),
@@ -72,28 +72,38 @@ class _Page1State extends State<Page1> {
 }
 
 class Page2 extends StatelessWidget {
-  const Page2({super.key});
+  Page2({super.key});
+
+  final List<String> animalList = [
+    '강아지',
+    '고양이',
+    '앵무새',
+    '토끼',
+    '오리',
+    '거위',
+    '원숭이'
+  ];
+
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: ListView.builder(
-        itemCount: 1,
-        itemBuilder: (BuildContext context, int index) {
-          return Column(
-            children: [
-              Container(
-                  margin: const EdgeInsets.fromLTRB(0, 150, 0, 300),
-                  child: const Text("강아지")),
-              Container(
-                  margin: const EdgeInsets.only(bottom: 300),
-                  child: const Text("고양이")),
-            ],
-          );
-        },
-      ),
-    );
+        appBar: AppBar(),
+        body: ListView.builder(
+          controller: _scrollController,
+          itemExtent: 300,
+          itemCount: animalList.length,
+          itemBuilder: (BuildContext context, int index) {
+            return ListTile(title: Center(child: Text(animalList[index])));
+          },
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            _scrollController.jumpTo(0);
+          },
+          child: const Icon(Icons.vertical_align_top),
+        ));
   }
 }
 
