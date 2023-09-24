@@ -89,7 +89,9 @@ class Page2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: const Text("1번 문제"),
+        ),
         body: ListView.builder(
           controller: _scrollController,
           itemExtent: 300,
@@ -107,26 +109,146 @@ class Page2 extends StatelessWidget {
   }
 }
 
-class Page3 extends StatelessWidget {
+class Page3 extends StatefulWidget {
   const Page3({super.key});
+
+  @override
+  State<Page3> createState() => _Page3State();
+}
+
+class _Page3State extends State<Page3> {
+  String inputText = '';
+  final myController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: const Text("2번과제"),
+      appBar: AppBar(
+        title: const Text("2번 문제"),
+      ),
+      body: Column(
+        children: [
+          const SizedBox(height: 200),
+          TextField(
+            controller: myController,
+            onChanged: (text) {
+              setState(() {
+                inputText = text;
+              });
+            },
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          Text(inputText,
+              style:
+                  const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          myController.clear();
+        },
+        child: const Icon(Icons.close),
+      ),
     );
   }
 }
 
-class Page4 extends StatelessWidget {
+class Page4 extends StatefulWidget {
   const Page4({super.key});
+
+  @override
+  State<Page4> createState() => _Page4State();
+}
+
+class _Page4State extends State<Page4> {
+  bool isSunClicked = false;
+  bool isMoonClicked = false;
+  bool isStarClicked = false;
+  Color iconColor = Colors.grey;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: const Text("3번과제"),
+      body: Column(
+        children: [
+          ListView(
+            shrinkWrap: true,
+            children: [
+              ListTile(
+                leading: Icon(
+                  Icons.sunny,
+                  color: isSunClicked ? Colors.red : Colors.grey,
+                ),
+                title: const Text('Sun'),
+                trailing: IconButton(
+                    onPressed: () {
+                      isSunClicked = !isSunClicked;
+                      setState(() {});
+                    },
+                    icon: const Icon(Icons.navigate_next)),
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.nightlight,
+                  color: isMoonClicked ? Colors.orange : Colors.grey,
+                ),
+                title: const Text('Moon'),
+                trailing: IconButton(
+                    onPressed: () {
+                      isMoonClicked = !isMoonClicked;
+                      setState(() {});
+                    },
+                    icon: const Icon(Icons.navigate_next)),
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.star,
+                  color: isStarClicked ? Colors.yellow : Colors.grey,
+                ),
+                title: const Text('Star'),
+                trailing: IconButton(
+                    onPressed: () {
+                      isStarClicked = !isStarClicked;
+                      setState(() {});
+                    },
+                    icon: const Icon(Icons.navigate_next)),
+              ),
+            ],
+          ),
+          TextField(
+              decoration: const InputDecoration(
+                hintText: "키고 끄고 싶은 아이콘을 입력하세요.",
+                hintStyle: TextStyle(fontSize: 20),
+              ),
+              onSubmitted: (value) {
+                setState(() {
+                  switch (value) {
+                    case '태양':
+                      isSunClicked = !isSunClicked;
+                      break;
+                    case '달':
+                      isMoonClicked = !isMoonClicked;
+                      break;
+                    case '별':
+                      isStarClicked = !isStarClicked;
+                      break;
+                    default:
+                      iconColor = Colors.grey;
+                      break;
+                  }
+                });
+              }),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          isSunClicked = false;
+          isMoonClicked = false;
+          isStarClicked = false;
+          setState(() {});
+        },
+        child: const Icon(Icons.refresh),
+      ),
     );
   }
 }
