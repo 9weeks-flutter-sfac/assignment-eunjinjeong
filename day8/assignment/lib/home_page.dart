@@ -120,9 +120,20 @@ class _HomePageState extends State<HomePage> {
                               ),
                             )
                           : Shimmer.fromColors(
-                              baseColor: Colors.blue,
-                              highlightColor: Colors.black,
-                              child: const Icon(Icons.rotate_left),
+                              baseColor: Colors.grey,
+                              highlightColor: Colors.grey.shade100,
+                              child: Container(
+                                margin: const EdgeInsets.all(8.0),
+                                width: double.infinity,
+                                height: 200,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16.0),
+                                ),
+                                child: Image.network(
+                                  snapshot.data[index]['url'].toString(),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                             );
                     },
                   ),
@@ -134,6 +145,7 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   if (isCheckingNetwork) const Text('인터넷 확인중입니다'),
+                  const CircularProgressIndicator(),
                   if (!isCheckingNetwork) const Text('인터넷이 연결되지 않았습니다!'),
                   const SizedBox(height: 16),
                 ],
