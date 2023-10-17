@@ -1,7 +1,6 @@
 import 'package:assignment/widgets/post_card.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-
 import '../model/post.dart';
 
 class MainPage extends StatefulWidget {
@@ -20,9 +19,12 @@ class _MainPageState extends State<MainPage> {
     var res = await dio.get(url);
     if (res.statusCode == 200) {
       // print(res.data);
-      var data = List<Map<String, dynamic>>.from(res.data);
-      return data.map((e) => Post.fromMap(e)).toList();
-    }
+      var data = List<Map<String, dynamic>>.from(
+          res.data); //Map<String, dynamic>을 from을 통해 확실히 가져오겠다.
+      return data
+          .map((e) => Post.fromMap(e))
+          .toList(); //data의 데이터 타입은 Map이기 떄문에 .map을 사용할 수 있음 -> map을 활용해 post안에 있는 요소를 전부다 가져온다.
+    } // map이 전달해주는 건 interable이기 때문에 toList가 필요함.
     return [];
   }
 
